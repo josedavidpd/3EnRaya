@@ -1,0 +1,22 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.juegoContainer {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-areas: "titulo"
+    "tablero"
+}
+
+#tableroContainer {
+    display: grid;
+    grid-area: tablero;
+    grid-template-areas: "cuad1 cuad2 cuad3"
+    "cuad4 cuad5 cuad6"
+    "cuad7 cuad8 cuad9"
+}
