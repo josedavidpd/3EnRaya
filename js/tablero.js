@@ -1,5 +1,3 @@
-var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/circulo.svg" class="circulo"></img>');
-var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/equis.svg" class="equis"></img>');
 const cuad1 = document.getElementById('cuad1');
 const cuad2 = document.getElementById('cuad2');
 const cuad3 = document.getElementById('cuad3');
@@ -9,8 +7,35 @@ const cuad6 = document.getElementById('cuad6');
 const cuad7 = document.getElementById('cuad7');
 const cuad8 = document.getElementById('cuad8');
 const cuad9 = document.getElementById('cuad9');
-document.querySelector('.cuad.activo').addEventListener('click', e => {
-    console.log(e.target);
-    ponerCirculo(e.target);
-    e.target.classList.remove('activo');
+
+var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/circulo.svg" class="circulo"></img>');
+var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/equis.svg" class="equis"></img>');
+var timer = new Timer();
+var timerStarted = false;
+
+
+$(document).on('click', '.activo', e => {
+    if (!timerStarted) {
+        timer.start();
+    }
+    if (document.getElementsByClassName('activo').length != 0) {
+        ponerCirculo(e.target);
+        e.target.classList.remove('activo');
+    }
+});
+
+$(document).on('click', '.cuad', e => {
+    if (document.getElementsByClassName('activo').length == 0) {
+        timer.stop();
+        timerStarted = false;
+    }
+});
+timer.addEventListener('secondsUpdated', function (e) {
+    $('#cronometro .values').html(timer.getTimeValues().toString());
+});
+timer.addEventListener('started', function (e) {
+    $('#cronometro .values').html(timer.getTimeValues().toString());
+});
+timer.addEventListener('reset', function (e) {
+    $('#cronometro .values').html(timer.getTimeValues().toString());
 });

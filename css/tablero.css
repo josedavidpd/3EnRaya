@@ -25,6 +25,13 @@ body {
     background-color: gainsboro;
 }
 
+#titulo,
+#cronometro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #tableroContainer {
     display: grid;
     grid-area: tablero;
@@ -40,6 +47,12 @@ body {
     justify-content: center;
     justify-items: center;
     background-color: bisque;
+}
+
+.cuad.activo:hover {
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .cuad.activo {
