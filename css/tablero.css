@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -9,14 +10,43 @@ html, body {
     width: 100%;
     display: grid;
     grid-template-rows: 1fr 2fr;
-    grid-template-areas: "titulo"
-    "tablero"
+    grid-template-areas: "titulo cronometro"
+        "tablero tablero";
+    background-color: black;
+}
+
+#titulo {
+    grid-area: titulo;
+    background-color: darkgray;
+}
+
+#cronometro {
+    grid-area: cronometro;
+    background-color: gainsboro;
 }
 
 #tableroContainer {
     display: grid;
     grid-area: tablero;
     grid-template-areas: "cuad1 cuad2 cuad3"
-    "cuad4 cuad5 cuad6"
-    "cuad7 cuad8 cuad9"
+        "cuad4 cuad5 cuad6"
+        "cuad7 cuad8 cuad9";
+    background-color: black;
+}
+
+.cuad {
+    outline: 1px solid black;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    background-color: bisque;
+}
+
+.cuad.activo {
+    cursor: pointer;
+}
+
+.circulo,
+.equis {
+    max-width: 30px;
 }
