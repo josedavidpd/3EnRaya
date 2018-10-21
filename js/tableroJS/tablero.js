@@ -10,13 +10,12 @@ const cuad9 = document.getElementById('cuad9');
 
 var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/circulo.svg" class="circulo"></img>');
 var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/equis.svg" class="equis"></img>');
-var timer = new Timer();
 var timerStarted = false;
 
 
 $(document).on('click', '.activo', e => {
     if (!timerStarted) {
-        timer.start();
+        // timer.start();
     }
     if (document.getElementsByClassName('activo').length != 0) {
         ponerCirculo(e.target);
@@ -26,16 +25,7 @@ $(document).on('click', '.activo', e => {
 
 $(document).on('click', '.cuad', e => {
     if (document.getElementsByClassName('activo').length == 0) {
-        timer.stop();
+        // timer.stop();
         timerStarted = false;
     }
-});
-timer.addEventListener('secondsUpdated', function (e) {
-    $('#cronometro .values').html(timer.getTimeValues().toString());
-});
-timer.addEventListener('started', function (e) {
-    $('#cronometro .values').html(timer.getTimeValues().toString());
-});
-timer.addEventListener('reset', function (e) {
-    $('#cronometro .values').html(timer.getTimeValues().toString());
 });
