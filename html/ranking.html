@@ -17,22 +17,76 @@
 </head>
 <body>
 
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
-    <a class="navbar-brand" href="#">Tic Tac Toe</a>
-        <ul class="nav navbar-nav nav-flex-icons ml-auto">
-           
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" href="#" id="navbarDropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-user"></i>
-                    Usuario
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item waves-effect waves-light" href="#"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
-                  
-                </div>
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color">
+        <a class="navbar-brand" href="#">Tic Tac Toe</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3" aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-3">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link waves-effect waves-light unique-color ml-4" href="tablero.html">JUGAR
+                
+              </a>
             </li>
-        </ul>
-    </nav>
+            <li class="nav-item ml-4">
+              <a class="nav-link waves-effect waves-light" href="#">Ranking</a>
+            </li>
+            
+          </ul>
+          <ul class="navbar-nav ml-auto nav-flex-icons">
+              
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user mr-1"></i>Usuario
+              </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-default animated zoomIn" aria-labelledby="navbarDropdownMenuLink">
+               
+                <a class="dropdown-item waves-effect waves-light" href="#"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container">
+          <div class="col">
+              <div class="col-md-12 col-lg-12">
+                    <table class="table table-striped mt-4">
+                            <thead>
+                              <tr>
+                                <th scope="col">Posición</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Fecha última partida</th>
+                                <th scope="col">Puntos</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td><span class="text-capitalize">pepe</span></td>
+                                <td>20/09/18</td>
+                                <td><span class="font-weight-bold">8</span></td>
+                              </tr>
+
+                              <tr>
+                                    <th scope="row">2</th>
+                                    <td><span class="text-capitalize">juan</span></td>
+                                    <td>21/09/18</td>
+                                    <td><span class="font-weight-bold">2</span></td>
+                                  </tr>
+                              
+                            </tbody>
+                          </table>
+
+              </div>
+
+
+          </div>
+
+
+      </div>
 
 
 <script src="../js/jquery-3.2.1.min.js"></script>
