@@ -7,20 +7,33 @@ const cuad6 = document.getElementById('cuad6');
 const cuad7 = document.getElementById('cuad7');
 const cuad8 = document.getElementById('cuad8');
 const cuad9 = document.getElementById('cuad9');
-const cronometro = new Cronometro( document.getElementById('cronometro'));
+const cronometro = new Cronometro(document.getElementById('cronometro'));
 const mensajePerder = "Lo sentimos, has perdido";
+const mensajeEmpate = "Nadie ha ganado";
 const imprimirMensajeFinal = (a, b) => a.innerHTML = b;
-const ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<i class="circulo"></i>');
-const ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i>');
+const ponerCirculo = a => a.insertAdjacentHTML('afterbegin', '<i class="circulo"></i>');
+const ponerEquis = a => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i>');
 var cronometroEmpezado = false;
 var puntos = 0;
-var mensajeGanar = `Enhorabuena, has ganado con ${puntos} puntos`;
+var mensajeGanar = pnts => `Enhorabuena, has ganado con ${pnts} puntos`;
+var arrayActivo;
+var ganaJugador = false;
+var empate = false;
 
+function calcularMaquina() {
+    arrayActivo = document.getElementsByClassName('activo');
+    if (arrayActivo.length == 0) {
+        cronometro.parar();
+        cronometroEmpezado = false;
+    } else {
+        let aleatorio = Math.floor((Math.random() * arrayActivo.length));
+        ponerEquis(arrayActivo[aleatorio]);
+        arrayActivo[aleatorio].classList.remove('activo');
+    }
+}
 
 $(document).on('click', '.activo', e => {
-    var array = document.getElementsByClassName('activo');
-    var aleatorio = Math.floor((Math.random() *array.length));
-
+    
     if (!cronometroEmpezado) {
         cronometro.iniciar();
     }
@@ -29,16 +42,25 @@ $(document).on('click', '.activo', e => {
         e.target.classList.remove('activo');
     }
 
-   
-    ponerEquis(document.getElementById('cuad'+aleatorio));
-    document.getElementById('cuad'+aleatorio).classList.remove('activo');
+    calcularMaquina();
     
-
 });
 
 $(document).on('click', '.cuad', e => {
     if (document.getElementsByClassName('activo').length == 0) {
         cronometro.parar();
+        if (ganaJugador) {
+            let tiempo = Object.values(cronometro)[2];
+            let tiempoMin = Object.values(tiempo)[0];
+            let tiempoSeg = Object.values(tiempo)[1];
+            let tiempoMiliseg = Object.values(tiempo)[2];
+            puntos = tiempoMin * tiempoSeg + tiempoMiliseg;
+            imprimirMensajeFinal(titulo, mensajeGanar(puntos));
+        } else if (empate) {
+            imprimirMensajeFinal(titulo, mensajeEmpate);
+        } else {
+            imprimirMensajeFinal(titulo, mensajePerder);
+        }
         cronometroEmpezado = false;
     }
 });
@@ -46,4 +68,3 @@ $(document).on('click', '.cuad', e => {
 $(document).on('click', '#resetearCronometro', e=> {
     cronometro.resetear();
 });
-console.log(imprimirMensajeFinal(titulo, mensajeGanar));
