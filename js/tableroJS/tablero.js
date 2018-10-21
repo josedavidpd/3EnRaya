@@ -7,15 +7,16 @@ const cuad6 = document.getElementById('cuad6');
 const cuad7 = document.getElementById('cuad7');
 const cuad8 = document.getElementById('cuad8');
 const cuad9 = document.getElementById('cuad9');
+const cronometro = new Cronometro( document.getElementById('cronometro'));
 
-var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/circulo.svg" class="circulo"></img>');
-var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<img src="../img/equis.svg" class="equis"></img>');
-var timerStarted = false;
+var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<i class="circulo"></i>');
+var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i>');
+var cronometroEmpezado = false;
 
 
 $(document).on('click', '.activo', e => {
-    if (!timerStarted) {
-        // timer.start();
+    if (!cronometroEmpezado) {
+        cronometro.iniciar();
     }
     if (document.getElementsByClassName('activo').length != 0) {
         ponerCirculo(e.target);
@@ -25,7 +26,11 @@ $(document).on('click', '.activo', e => {
 
 $(document).on('click', '.cuad', e => {
     if (document.getElementsByClassName('activo').length == 0) {
-        // timer.stop();
-        timerStarted = false;
+        cronometro.parar();
+        cronometroEmpezado = false;
     }
+});
+
+$(document).on('click', '#resetearCronometro', e=> {
+    cronometro.resetear();
 });
