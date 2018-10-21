@@ -8,11 +8,13 @@ const cuad7 = document.getElementById('cuad7');
 const cuad8 = document.getElementById('cuad8');
 const cuad9 = document.getElementById('cuad9');
 const cronometro = new Cronometro( document.getElementById('cronometro'));
-
-var ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<i class="circulo"></i>');
-var ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i>');
+const mensajePerder = "Lo sentimos, has perdido";
+const imprimirMensajeFinal = (a, b) => a.innerHTML = b;
+const ponerCirculo = (a) => a.insertAdjacentHTML('afterbegin', '<i class="circulo"></i>');
+const ponerEquis = (a) => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i>');
 var cronometroEmpezado = false;
-
+var puntos = 0;
+var mensajeGanar = `Enhorabuena, has ganado con ${puntos} puntos`;
 
 $(document).on('click', '.activo', e => {
     if (!cronometroEmpezado) {
@@ -34,3 +36,4 @@ $(document).on('click', '.cuad', e => {
 $(document).on('click', '#resetearCronometro', e=> {
     cronometro.resetear();
 });
+console.log(imprimirMensajeFinal(titulo, mensajeGanar));

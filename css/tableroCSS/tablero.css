@@ -9,20 +9,21 @@ body {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 0.5fr 2fr;
     grid-template-areas: "titulo cronometro"
         "tablero tablero";
-    background-color: black;
+    padding: 0 2em;
+    margin-bottom: 2em;
 }
 
 #titulo {
     grid-area: titulo;
-    background-color: darkgray;
+    font-size: 40px;
 }
 
 #cronometro {
     grid-area: cronometro;
-    background-color: gainsboro;
+    font-size: 40px;
 }
 
 #titulo,
@@ -44,11 +45,11 @@ body {
 .cuad {
     max-height: 100%;
     max-width: 100%;
-    outline: 2px solid black;
+    outline: 2px solid #dee2e6;
     display: flex;
     justify-content: center;
     justify-items: center;
-    background-color: bisque;
+    background-color: #2bbbad;
     margin: 0;
     padding: 0;
 }
@@ -81,4 +82,14 @@ body {
 
 .equis {
     background-image: url(../../img/equis.svg);
+}
+
+@media (max-width:991px) {
+    #titulo {
+        font-size: 20px;
+    }
+    
+    #cronometro {
+        font-size: 20px;
+    }
 }
