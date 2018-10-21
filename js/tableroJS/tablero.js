@@ -16,7 +16,11 @@ var cronometroEmpezado = false;
 var puntos = 0;
 var mensajeGanar = `Enhorabuena, has ganado con ${puntos} puntos`;
 
+
 $(document).on('click', '.activo', e => {
+    var array = document.getElementsByClassName('activo');
+    var aleatorio = Math.floor((Math.random() *array.length));
+
     if (!cronometroEmpezado) {
         cronometro.iniciar();
     }
@@ -24,6 +28,12 @@ $(document).on('click', '.activo', e => {
         ponerCirculo(e.target);
         e.target.classList.remove('activo');
     }
+
+   
+    ponerEquis(document.getElementById('cuad'+aleatorio));
+    document.getElementById('cuad'+aleatorio).classList.remove('activo');
+    
+
 });
 
 $(document).on('click', '.cuad', e => {
