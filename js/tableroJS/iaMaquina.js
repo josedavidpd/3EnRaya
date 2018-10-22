@@ -205,16 +205,6 @@ class Jugador {
         return this.usuario;
     }
 
-    cambiarSimbolo() {
-        if (this.simbolo === "o") {
-            this.simbolo = "x";
-            this.simboloHtml = `<i class="fa fa-times" aria-hidden="true"></i>`;
-        } else {
-            this.simbolo = "o";
-            this.simboloHtml = `<i class="fa fa-circle-o" aria-hidden="true"></i>`;
-        }
-    }
-
     get espaciosActuales() {
         return this.espacios;
     }

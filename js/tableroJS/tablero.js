@@ -89,9 +89,5 @@ function juegoGanado(simbolo) {
     alert(`Ganador ${simbolo}`);
     cronometro.parar();
     cronometroEmpezado = false;
-    console.log(document.getElementsByClassName('activo'));
-    for (let index = 0; index < document.getElementsByClassName('activo').length; index++) {
-        document.getElementsByClassName('activo')[index].classList.remove('activo');
-    }
-    console.log(document.getElementsByClassName('activo'));
+    $('.activo').removeClass('activo');
 }
