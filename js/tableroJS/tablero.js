@@ -1,12 +1,12 @@
-const cuad1 = document.getElementById('cuad1');
-const cuad2 = document.getElementById('cuad2');
-const cuad3 = document.getElementById('cuad3');
-const cuad4 = document.getElementById('cuad4');
-const cuad5 = document.getElementById('cuad5');
-const cuad6 = document.getElementById('cuad6');
-const cuad7 = document.getElementById('cuad7');
-const cuad8 = document.getElementById('cuad8');
-const cuad9 = document.getElementById('cuad9');
+const cuad1 = document.getElementById('1');
+const cuad2 = document.getElementById('2');
+const cuad3 = document.getElementById('3');
+const cuad4 = document.getElementById('4');
+const cuad5 = document.getElementById('5');
+const cuad6 = document.getElementById('6');
+const cuad7 = document.getElementById('7');
+const cuad8 = document.getElementById('8');
+const cuad9 = document.getElementById('9');
 const cronometro = new Cronometro(document.getElementById('cronometro'));
 const mensajePerder = "Lo sentimos, has perdido";
 const mensajeEmpate = "Nadie ha ganado";
@@ -19,6 +19,7 @@ var mensajeGanar = pnts => `Enhorabuena, has ganado con ${pnts} puntos`;
 var arrayActivo;
 var ganaJugador = false;
 var empate = false;
+const tablero = new Tablero();
 
 function calcularMaquina() {
     arrayActivo = document.getElementsByClassName('activo');
