@@ -45,56 +45,38 @@ function calcularMaquina() {
         ponerEquis(arrayActivo[aleatorio]);
         arrayActivo[aleatorio].classList.remove('activo');
     }
-    if (esGanador('equis')) {
-        alert('Ganador Equis');
-        cronometro.parar();
-        cronometroEmpezado = false;
-        console.log(arrayActivo);
-        for (let index = 0; index < arrayActivo.length; index++) {
-            arrayActivo[index].classList.remove('activo');
-        }
-        console.log(arrayActivo);
-    }
+    if (esGanador('equis'))
+        juegoGanado('equis');
 }
 
 $(document).on('click', '.activo', e => {
-    if (!cronometroEmpezado) {
+    if (!cronometroEmpezado)
         cronometro.iniciar();
-    }
     if (document.getElementsByClassName('activo').length != 0) {
         ponerCirculo(e.target);
         e.target.classList.remove('activo');
     }
-    if (esGanador('circulo')) {
-        alert('Ganador Circulo');
-        cronometro.parar();
-        cronometroEmpezado = false;
-        console.log(arrayActivo);
-        for (let index = 0; index < arrayActivo.length; index++) {
-            arrayActivo[index].classList.remove('activo');
-        }
-        console.log(arrayActivo);
-    } else {
+    if (esGanador('circulo'))
+        juegoGanado('circulo');
+    else
         calcularMaquina();
-    }
-
 });
 
 $(document).on('click', '.cuad', e => {
     if (document.getElementsByClassName('activo').length == 0) {
         cronometro.parar();
-        if (ganaJugador) {
+        if (esGanador('circulo')) {
             let tiempo = Object.values(cronometro)[2];
             let tiempoMin = Object.values(tiempo)[0];
             let tiempoSeg = Object.values(tiempo)[1];
             let tiempoMiliseg = Object.values(tiempo)[2];
             puntos = tiempoMin * tiempoSeg + tiempoMiliseg;
             imprimirMensajeFinal(titulo, mensajeGanar(puntos));
-        } else if (empate) {
-            imprimirMensajeFinal(titulo, mensajeEmpate);
-        } else {
-            imprimirMensajeFinal(titulo, mensajePerder);
         }
+        else if (esGanador('equis'))
+            imprimirMensajeFinal(titulo, mensajePerder);
+        else
+            imprimirMensajeFinal(titulo, mensajeEmpate);
         cronometroEmpezado = false;
     }
 });
@@ -102,3 +84,14 @@ $(document).on('click', '.cuad', e => {
 $(document).on('click', '#resetearCronometro', e => {
     cronometro.resetear();
 });
+
+function juegoGanado(simbolo) {
+    alert(`Ganador ${simbolo}`);
+    cronometro.parar();
+    cronometroEmpezado = false;
+    console.log(document.getElementsByClassName('activo'));
+    for (let index = 0; index < document.getElementsByClassName('activo').length; index++) {
+        document.getElementsByClassName('activo')[index].classList.remove('activo');
+    }
+    console.log(document.getElementsByClassName('activo'));
+}
