@@ -1,12 +1,12 @@
-const cuad1 = document.getElementById('1');
-const cuad2 = document.getElementById('2');
-const cuad3 = document.getElementById('3');
-const cuad4 = document.getElementById('4');
-const cuad5 = document.getElementById('5');
-const cuad6 = document.getElementById('6');
-const cuad7 = document.getElementById('7');
-const cuad8 = document.getElementById('8');
-const cuad9 = document.getElementById('9');
+const cuad1 = $('#1');
+const cuad2 = $('#2');
+const cuad3 = $('#3');
+const cuad4 = $('#4');
+const cuad5 = $('#5');
+const cuad6 = $('#6');
+const cuad7 = $('#7');
+const cuad8 = $('#8');
+const cuad9 = $('#9');
 const cronometro = new Cronometro(document.getElementById('cronometro'));
 const mensajePerder = "Lo sentimos, has perdido";
 const mensajeEmpate = "Nadie ha ganado";
@@ -19,7 +19,21 @@ var mensajeGanar = pnts => `Enhorabuena, has ganado con ${pnts} puntos`;
 var arrayActivo;
 var ganaJugador = false;
 var empate = false;
-const tablero = new Tablero();
+
+function esGanador(simbolo) {
+    //HORIZONTAL
+    var bool = (cuad1.has(`i.${simbolo}`).length != 0 && cuad2.has(`i.${simbolo}`).length != 0 && cuad3.has(`i.${simbolo}`).length != 0);
+    bool = bool || (cuad4.has(`i.${simbolo}`).length != 0 && cuad5.has(`i.${simbolo}`).length != 0 && cuad6.has(`i.${simbolo}`).length != 0);
+    bool = bool || (cuad7.has(`i.${simbolo}`).length != 0 && cuad8.has(`i.${simbolo}`).length != 0 && cuad9.has(`i.${simbolo}`).length != 0);
+    //VERTical
+    bool = bool || (cuad1.has(`i.${simbolo}`).length != 0 && cuad4.has(`i.${simbolo}`).length != 0 && cuad7.has(`i.${simbolo}`).length != 0);
+    bool = bool || (cuad2.has(`i.${simbolo}`).length != 0 && cuad5.has(`i.${simbolo}`).length != 0 && cuad8.has(`i.${simbolo}`).length != 0);
+    bool = bool || (cuad3.has(`i.${simbolo}`).length != 0 && cuad6.has(`i.${simbolo}`).length != 0 && cuad9.has(`i.${simbolo}`).length != 0);
+    //DIAGONAl
+    bool = bool || (cuad1.has(`i.${simbolo}`).length != 0 && cuad5.has(`i.${simbolo}`).length != 0 && cuad9.has(`i.${simbolo}`).length != 0);
+    bool = bool || (cuad3.has(`i.${simbolo}`).length != 0 && cuad5.has(`i.${simbolo}`).length != 0 && cuad7.has(`i.${simbolo}`).length != 0);
+    return bool;
+};
 
 function calcularMaquina() {
     arrayActivo = document.getElementsByClassName('activo');
@@ -31,10 +45,19 @@ function calcularMaquina() {
         ponerEquis(arrayActivo[aleatorio]);
         arrayActivo[aleatorio].classList.remove('activo');
     }
+    if (esGanador('equis')) {
+        alert('Ganador Equis');
+        cronometro.parar();
+        cronometroEmpezado = false;
+        console.log(arrayActivo);
+        for (let index = 0; index < arrayActivo.length; index++) {
+            arrayActivo[index].classList.remove('activo');
+        }
+        console.log(arrayActivo);
+    }
 }
 
 $(document).on('click', '.activo', e => {
-    
     if (!cronometroEmpezado) {
         cronometro.iniciar();
     }
@@ -42,9 +65,19 @@ $(document).on('click', '.activo', e => {
         ponerCirculo(e.target);
         e.target.classList.remove('activo');
     }
+    if (esGanador('circulo')) {
+        alert('Ganador Circulo');
+        cronometro.parar();
+        cronometroEmpezado = false;
+        console.log(arrayActivo);
+        for (let index = 0; index < arrayActivo.length; index++) {
+            arrayActivo[index].classList.remove('activo');
+        }
+        console.log(arrayActivo);
+    } else {
+        calcularMaquina();
+    }
 
-    calcularMaquina();
-    
 });
 
 $(document).on('click', '.cuad', e => {
@@ -66,6 +99,6 @@ $(document).on('click', '.cuad', e => {
     }
 });
 
-$(document).on('click', '#resetearCronometro', e=> {
+$(document).on('click', '#resetearCronometro', e => {
     cronometro.resetear();
 });

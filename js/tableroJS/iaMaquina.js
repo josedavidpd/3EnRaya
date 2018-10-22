@@ -1,7 +1,7 @@
 /**https://codepen.io/anon/pen/QZBWxo */
 
 function iniciarJuego() {
-    playerVsComp();
+    jugadorVsMaquina();
 }
 
 function eleccionAleatoria() {
@@ -86,15 +86,19 @@ function jugadorVsMaquina() {
                 jugador1.nuevoEspacio(parseInt(id, 10), comprobar);
 
                 if (jugador1.comprobarGanar(tableroJuego.condicionesGanar)) {
-                    verQuienVaPrimero();
                     setTimeout(function () {
                         winner("Player 1");
+                        for (let index = 0; index < arrayActivo.length; index++) {
+                            arrayActivo[index].classList.remove('activo');
+                        }
                     }, 100);
                 } else if (tableroJuego.isLleno()) {
-                    verQuienVaPrimero();
                     tableroJuego.turnoActual = 2;
                     setTimeout(function () {
                         empate();
+                        for (let index = 0; index < arrayActivo.length; index++) {
+                            arrayActivo[index].classList.remove('activo');
+                        }
                     }, 100);
                 } else {
                     $(".active-turn-1").html("");
@@ -114,15 +118,19 @@ function jugadorVsMaquina() {
                     '<i class="fa fa-chevron-right" aria-hidden="true"></i>'
                 );
                 if (jugador2.comprobarGanar(tableroJuego.condicionesGanar)) {
-                    verQuienVaPrimero();
-                    // setTimeout(function () {
-                    //     winner(jugador2.usuario);
-                    // }, 100);
+                    setTimeout(function () {
+                        winner(jugador2.usuario);
+                        for (let index = 0; index < arrayActivo.length; index++) {
+                            arrayActivo[index].classList.remove('activo');
+                        }
+                    }, 100);
                 } else if (tableroJuego.isLleno()) {
-                    verQuienVaPrimero();
-                    // setTimeout(function () {
-                    //     empate();
-                    // }, 100);
+                    setTimeout(function () {
+                        empate();
+                        for (let index = 0; index < arrayActivo.length; index++) {
+                            arrayActivo[index].classList.remove('activo');
+                        }
+                    }, 100);
                 } else {
                     tableroJuego.turnoActual = 1;
                 }
@@ -244,12 +252,22 @@ class Jugador {
     limpiarEspacios() {
         this.espacios = [];
     }
+
 }
 /*****************************************************************/
+function noWinner() {
+    alert("No Winner!");
+    cronometro.parar();
+}
+
+function winner(usuario) {
+    alert(`${usuario} wins!`);
+    cronometro.parar();
+}
 /* Begin Logic and Variable Initialization */
 let ajustes = new Ajustes();
 let jugador1 = new Jugador("Player 1", ajustes.p1Simbolo);
 let jugador2 = new Jugador("Computer", ajustes.p2Simbolo);
-let tableroJuego = new Tablero();
 let turnoActual = 1; //if 1, player 1's turn. If 2, player 2's turn.
+const tableroJuego = new Tablero();
 iniciarJuego();
