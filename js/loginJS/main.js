@@ -18,9 +18,10 @@ $(document).ready(function () {
                 localStorage.setItem("email", user.email);
 
 
-                location.replace('../../html/tablero.html');
+                location.replace('../../html/ranking.html');
             })
             .fail(function (resp) {
+               $("#errorLogin").removeClass('d-none');
                 console.log("ERROR RESPUESTA");
                 console.log(resp);
             });
@@ -77,5 +78,7 @@ $(document).ready(function () {
         
        
 
-    })(jQuery);
-});
+    });
+
+    
+});(jQuery)
