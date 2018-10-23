@@ -35,7 +35,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Email no válido">
-						<input class="input100" type="text" name="email" placeholder="Correo electrónico">
+						<input class="input100" id="email" type="text" name="email" placeholder="Correo electrónico">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -43,7 +43,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Contraseña incorrecta">
-						<input class="input100" type="password" name="pass" placeholder="Contraseña">
+						<input class="input100" id="password" type="password" name="pass" placeholder="Contraseña">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -51,7 +51,7 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button id="btn-login" class="login100-form-btn">
 							Iniciar sesión
 						</button>
 					</div>
@@ -80,7 +80,7 @@
 	
 	
 	<script src="../js/jquery-3.2.1.min.js"></script>
-	<script src="../js/popper.js"></script>
+	<script src="../js/popper.min.js"></script>
 	<script src="../js/loginJS/bootstrap.min.js"></script>
 	<script src="../js/loginJS/select2.min.js"></script>
 	<script src="../js/loginJS/tilt.jquery.min.js"></script>
@@ -91,7 +91,7 @@
 		})
 	</script>
 
-	<script src="../js/loginJS/main.js"></script>
+	<script type="text/javascript" src="../js/loginJS/main.js"></script>
 
 </body>
 </html>

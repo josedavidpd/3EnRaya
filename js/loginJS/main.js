@@ -1,4 +1,31 @@
 $(document).ready(function () {
+
+    $("#btn-login").on('click', function (e) {
+        e.preventDefault();
+        var em = $('#email').val();
+        var pwd = $('#password').val();
+
+        $.ajax({
+            method: "POST",
+            url:
+                "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
+            dataType: "json",
+            data: { email: em, password: pwd }
+        })
+            .done(function (user) {
+                localStorage.setItem("token", user.token);
+                localStorage.setItem("username", user.username);
+                localStorage.setItem("email", user.email);
+
+
+                location.replace('../../html/tablero.html');
+            })
+            .fail(function (resp) {
+                console.log("ERROR RESPUESTA");
+                console.log(resp);
+            });
+
+    });
     (function ($) {
         var input = $('.validate-input .input100');
 
@@ -47,7 +74,8 @@ $(document).ready(function () {
             $(thisAlert).removeClass('alert-validate');
         }
 
-
+        
+       
 
     })(jQuery);
 });
