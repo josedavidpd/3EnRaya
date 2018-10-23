@@ -2,15 +2,17 @@ $(document).ready(function () {
 
     $("#btn-registro").on('click', function (e) {
         e.preventDefault();
-        var em = $('#email').val();
+        var username = $('#nombreRegistro').val();
+        var em = $('#emailRegistro').val();
         var pwd = $('#password').val();
+        
 
         $.ajax({
             method: "POST",
             url:
-                "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
+                "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/signup",
             dataType: "json",
-            data: { email: em, password: pwd }
+            data: { username: username ,email: em, password: pwd }
         })
             .done(function (user) {
                 localStorage.setItem("token", user.token);
@@ -21,7 +23,7 @@ $(document).ready(function () {
                 location.replace('../../html/ranking.html');
             })
             .fail(function (resp) {
-               $("#errorLogin").removeClass('d-none');
+               $("#errorRegistro").removeClass('d-none');
                 console.log("ERROR RESPUESTA");
                 console.log(resp);
             });
