@@ -81,7 +81,7 @@ body {
 }
 
 .equis {
-    background-image: url(../../img/equis.svg);
+    background-image: url('../../img/equis.svg');
 }
 
 @media (max-width:991px) {
