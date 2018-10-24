@@ -109,6 +109,8 @@ class Juego {
                     juegoGanado('circulo');
                 } else if (!this.tablero.celdasVacias()) {
                     this.estado = ESTADO.TERMINADO;
+                    cronometro.parar();
+                    cronometroEmpezado = false;
                     imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
                 } else {
                     this.estado == ESTADO.ESPERANDO;
@@ -121,6 +123,8 @@ class Juego {
                         imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
                     } else if (!this.tablero.celdasVacias()) {
                         this.estado = ESTADO.TERMINADO;
+                        cronometro.parar();
+                        cronometroEmpezado = false;
                         imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
                     } else {
                         imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador 1");
@@ -252,5 +256,7 @@ function juegoGanado(simbolo) {
 
 var juego = new Juego();
 $(document).on('click', ('.activo'), e => {
+    if (!cronometroEmpezado)
+        cronometro.iniciar();
     juego.logica(parseInt(e.target.id));
 });
