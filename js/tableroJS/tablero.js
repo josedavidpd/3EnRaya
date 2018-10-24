@@ -95,7 +95,7 @@ class Juego {
         }
         this.partidas++;
         this.estado = ESTADO.JUGANDO;
-        imprimirMensajeFinal(document.getElementById('titulo'), "Turno de la máquina");
+        imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador");
     };
 
     logica(posicion) {
@@ -141,15 +141,14 @@ class Juego {
         var posicion = 0;
         var aux, mejor = -9999;
         let aleatorioNumero = Math.floor((Math.random() * 4));
-        console.log(aleatorioNumero);
+        console.log(`Linea156-${aleatorioNumero}`);
+
         if (aleatorioNumero == 0) {
             for (let i = 0; i < this.tablero.panel.length; i++) {
                 if (this.tablero.marcable(i)) {
-                    this.tablero.marcar(JUGADOR.CPU, i);
-                    this.tablero.marcar(0, i);
                     posicion = i;
                     console.log(i);
-                    i = this.tablero.panel.length-1;
+                    i = this.tablero.panel.length - 1;
                 }
             }
         } else {
@@ -207,76 +206,62 @@ class Juego {
     }
 }
 
-function calcularMaquina() {
-    arrayActivo = document.getElementsByClassName('activo');
-    if (arrayActivo.length == 0) {
-        cronometro.parar();
-        cronometroEmpezado = false;
-    } else {
-        let aleatorio = Math.floor((Math.random() * arrayActivo.length));
-        ponerEquis(arrayActivo[aleatorio]);
-        juego.tablero.marcar(JUGADOR.CPU, arrayActivo[aleatorio].id);
-        arrayActivo[aleatorio].classList.remove('activo');
-        juego.movimientoAI();
-    }
-    if (juego.tablero.esGanador('equis'))
-        juegoGanado('equis');
-}
-
-// $(document).on('click', '.activo', e => {
-//     if (!cronometroEmpezado)
-//         cronometro.iniciar();
-//     if (document.getElementsByClassName('activo').length != 0) {
-//         ponerCirculo(e.target);
-//         juego.tablero.marcar(JUGADOR.HUMANO, e.target.id);
-//         e.target.classList.remove('activo');
-//     }
-//     if (juego.tablero.esGanador('circulo'))
-//         juegoGanado('circulo');
-//     else
-//         calcularMaquina();
-// });
-
-// $(document).on('click', '.cuad', e => {
-//     if (document.getElementsByClassName('activo').length == 0) {
+// function calcularMaquina() {
+//     arrayActivo = document.getElementsByClassName('activo');
+//     if (arrayActivo.length == 0) {
 //         cronometro.parar();
-//         if (juego.tablero.esGanador(1)) {
-//             let tiempo = Object.values(cronometro)[2];
-//             let tiempoMin = Object.values(tiempo)[0];
-//             let tiempoSeg = Object.values(tiempo)[1];
-//             let tiempoMiliseg = Object.values(tiempo)[2];
-//             puntos = tiempoMin * tiempoSeg + tiempoMiliseg;
-//             imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
-//         } else if (juego.tablero.esGanador(2))
-//             imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
-//         else
-//             imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
-//         console.log('hola2');
 //         cronometroEmpezado = false;
+//     } else {
+//         let aleatorio = Math.floor((Math.random() * arrayActivo.length));
+//         ponerEquis(arrayActivo[aleatorio]);
+//         juego.tablero.marcar(JUGADOR.CPU, arrayActivo[aleatorio].id);
+//         arrayActivo[aleatorio].classList.remove('activo');
+//         juego.movimientoAI();
 //     }
-// });
+//     if (juego.tablero.esGanador('equis'))
+//         juegoGanado('equis');
+// }
+
+$(document).on('click', '.cuad', e => {
+    if (document.getElementsByClassName('activo').length == 0) {
+        cronometro.parar();
+        if (juego.tablero.esGanador(1)) {
+            let tiempo = Object.values(cronometro)[2];
+            let tiempoMin = Object.values(tiempo)[0];
+            let tiempoSeg = Object.values(tiempo)[1];
+            let tiempoMiliseg = Object.values(tiempo)[2];
+            puntos = tiempoMin * tiempoSeg + tiempoMiliseg;
+            imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+        } else if (juego.tablero.esGanador(2))
+            imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
+        else
+            imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
+        console.log('hola2');
+        cronometroEmpezado = false;
+    }
+});
 
 $(document).on('click', '#resetearCronometro', e => {
     cronometro.resetear();
 });
 
 function juegoGanado(simbolo) {
-    //if (simbolo == "circulo") //{
-    //let tiempo = Object.values(cronometro)[2];
-    //let tiempoMin = Object.values(tiempo)[0];
-    //let tiempoSeg = Object.values(tiempo)[1];
-    //let tiempoMiliseg = Object.values(tiempo)[2];
+    if (simbolo == "circulo") {
+        let tiempo = Object.values(cronometro)[2];
+        let tiempoMin = Object.values(tiempo)[0];
+        let tiempoSeg = Object.values(tiempo)[1];
+        let tiempoMiliseg = Object.values(tiempo)[2];
 
-    //if(tiempoSeg >0 && tiempoSeg <=30){
-    //puntos = 30
-    //}
+        if (tiempoSeg > 0 && tiempoSeg <= 30) {
+            puntos = 30
+        }
 
-    // imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
-    // }
+        imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+    }
     cronometro.parar();
     cronometroEmpezado = false;
-    alert(`Ganador ${simbolo}`);
     $('.activo').removeClass('activo');
+    alert(`Ganador ${simbolo}`);
 }
 
 var juego = new Juego();
