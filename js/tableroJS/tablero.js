@@ -260,6 +260,18 @@ $(document).on('click', '#resetearCronometro', e => {
 });
 
 function juegoGanado(simbolo) {
+    //if (simbolo == "circulo") //{
+      //let tiempo = Object.values(cronometro)[2];
+      //let tiempoMin = Object.values(tiempo)[0];
+                //let tiempoSeg = Object.values(tiempo)[1];
+                  //let tiempoMiliseg = Object.values(tiempo)[2];
+
+                  //if(tiempoSeg >0 && tiempoSeg <=30){
+                      //puntos = 30
+                  //}
+                  
+             // imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+   // }
     cronometro.parar();
     cronometroEmpezado = false;
     alert(`Ganador ${simbolo}`);
