@@ -109,6 +109,8 @@ class Juego {
                     juegoGanado('circulo');
                 } else if (!this.tablero.celdasVacias()) {
                     this.estado = ESTADO.TERMINADO;
+                    cronometro.parar();
+                    cronometroEmpezado = false;
                     imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
                 } else {
                     this.estado == ESTADO.ESPERANDO;
@@ -121,6 +123,8 @@ class Juego {
                         imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
                     } else if (!this.tablero.celdasVacias()) {
                         this.estado = ESTADO.TERMINADO;
+                        cronometro.parar();
+                        cronometroEmpezado = false;
                         imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
                     } else {
                         imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador 1");
@@ -136,16 +140,28 @@ class Juego {
     movimientoAI() {
         var posicion = 0;
         var aux, mejor = -9999;
-
-        for (let i = 0; i < this.tablero.panel.length; i++) {
-            if (this.tablero.marcable(i)) {
-                this.tablero.marcar(JUGADOR.CPU, i);
-                aux = this.min();
-                if (aux > mejor) {
-                    mejor = aux;
-                    posicion = i;
+        let aleatorioNumero = Math.floor((Math.random() * 3));
+        console.log(aleatorioNumero);
+        if (aleatorioNumero == 0) {
+            let aleatorioPosicion = Math.floor((Math.random() * $('.activo').length));
+            console.log(aleatorioPosicion);
+            while ($(`#${aleatorioPosicion}`).has("i").length != 0) {
+                aleatorioPosicion = Math.floor((Math.random() * $('.activo').length));
+                console.log('hola151');
+                console.log(aleatorioPosicion);
+            }
+            posicion = aleatorioPosicion;
+        } else {
+            for (let i = 0; i < this.tablero.panel.length; i++) {
+                if (this.tablero.marcable(i)) {
+                    this.tablero.marcar(JUGADOR.CPU, i);
+                    aux = this.min();
+                    if (aux > mejor) {
+                        mejor = aux;
+                        posicion = i;
+                    }
+                    this.tablero.marcar(0, i);
                 }
-                this.tablero.marcar(0, i);
             }
         }
         this.tablero.marcar(JUGADOR.CPU, posicion);
@@ -196,10 +212,10 @@ function calcularMaquina() {
         cronometro.parar();
         cronometroEmpezado = false;
     } else {
-        // let aleatorio = Math.floor((Math.random() * arrayActivo.length));
-        // ponerEquis(arrayActivo[aleatorio]);
-        // juego.tablero.marcar(JUGADOR.CPU, arrayActivo[aleatorio].id);
-        // arrayActivo[aleatorio].classList.remove('activo');
+        let aleatorio = Math.floor((Math.random() * arrayActivo.length));
+        ponerEquis(arrayActivo[aleatorio]);
+        juego.tablero.marcar(JUGADOR.CPU, arrayActivo[aleatorio].id);
+        arrayActivo[aleatorio].classList.remove('activo');
         juego.movimientoAI();
     }
     if (juego.tablero.esGanador('equis'))
@@ -244,13 +260,15 @@ $(document).on('click', '#resetearCronometro', e => {
 });
 
 function juegoGanado(simbolo) {
-    alert(`Ganador ${simbolo}`);
     cronometro.parar();
     cronometroEmpezado = false;
+    alert(`Ganador ${simbolo}`);
     $('.activo').removeClass('activo');
 }
 
 var juego = new Juego();
 $(document).on('click', ('.activo'), e => {
+    if (!cronometroEmpezado)
+        cronometro.iniciar();
     juego.logica(parseInt(e.target.id));
 });
