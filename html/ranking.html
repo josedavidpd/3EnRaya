@@ -43,7 +43,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-default animated zoomIn" aria-labelledby="navbarDropdownMenuLink">
                
-                <a class="dropdown-item waves-effect waves-light" href="#"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
+                <a class="dropdown-item waves-effect waves-light" href="#" id="btn-logout"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
               </div>
             </li>
           </ul>
@@ -58,24 +58,12 @@
                               <tr>
                                 <th scope="col">Posición</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Fecha última partida</th>
+                                <th scope="col">Tiempo</th>
                                 <th scope="col">Puntos</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td><span class="text-capitalize">pepe</span></td>
-                                <td>20/09/18</td>
-                                <td><span class="font-weight-bold">8</span></td>
-                              </tr>
-
-                              <tr>
-                                    <th scope="row">2</th>
-                                    <td><span class="text-capitalize">juan</span></td>
-                                    <td>21/09/18</td>
-                                    <td><span class="font-weight-bold">2</span></td>
-                                  </tr>
+                            <tbody id="ranking">
+                             
                               
                             </tbody>
                           </table>
