@@ -32,7 +32,8 @@ $(document).ready(function (){
 
 
     $("#btn-logout").on('click', function () {
-        localStorage.clear();
+        localStorage.removeItem('token')
+        localStorage.removeItem('username');
         location.replace('../../html/login.html');
 
     });

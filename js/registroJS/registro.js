@@ -4,7 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         var username = $('#nombreRegistro').val();
         var em = $('#emailRegistro').val();
-        var pwd = $('#password').val();
+        var pwd = $('#passwordRegistro').val();
         
 
         $.ajax({
