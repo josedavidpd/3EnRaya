@@ -140,17 +140,18 @@ class Juego {
     movimientoAI() {
         var posicion = 0;
         var aux, mejor = -9999;
-        let aleatorioNumero = Math.floor((Math.random() * 3));
+        let aleatorioNumero = Math.floor((Math.random() * 4));
         console.log(aleatorioNumero);
         if (aleatorioNumero == 0) {
-            let aleatorioPosicion = Math.floor((Math.random() * $('.activo').length));
-            console.log(aleatorioPosicion);
-            while ($(`#${aleatorioPosicion}`).has("i").length != 0) {
-                aleatorioPosicion = Math.floor((Math.random() * $('.activo').length));
-                console.log('hola151');
-                console.log(aleatorioPosicion);
+            for (let i = 0; i < this.tablero.panel.length; i++) {
+                if (this.tablero.marcable(i)) {
+                    this.tablero.marcar(JUGADOR.CPU, i);
+                    this.tablero.marcar(0, i);
+                    posicion = i;
+                    console.log(i);
+                    i = this.tablero.panel.length-1;
+                }
             }
-            posicion = aleatorioPosicion;
         } else {
             for (let i = 0; i < this.tablero.panel.length; i++) {
                 if (this.tablero.marcable(i)) {
@@ -261,17 +262,17 @@ $(document).on('click', '#resetearCronometro', e => {
 
 function juegoGanado(simbolo) {
     //if (simbolo == "circulo") //{
-      //let tiempo = Object.values(cronometro)[2];
-      //let tiempoMin = Object.values(tiempo)[0];
-                //let tiempoSeg = Object.values(tiempo)[1];
-                  //let tiempoMiliseg = Object.values(tiempo)[2];
+    //let tiempo = Object.values(cronometro)[2];
+    //let tiempoMin = Object.values(tiempo)[0];
+    //let tiempoSeg = Object.values(tiempo)[1];
+    //let tiempoMiliseg = Object.values(tiempo)[2];
 
-                  //if(tiempoSeg >0 && tiempoSeg <=30){
-                      //puntos = 30
-                  //}
-                  
-             // imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
-   // }
+    //if(tiempoSeg >0 && tiempoSeg <=30){
+    //puntos = 30
+    //}
+
+    // imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+    // }
     cronometro.parar();
     cronometroEmpezado = false;
     alert(`Ganador ${simbolo}`);
