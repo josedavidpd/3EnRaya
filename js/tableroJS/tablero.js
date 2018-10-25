@@ -252,8 +252,18 @@ function juegoGanado(simbolo) {
         let tiempoSeg = Object.values(tiempo)[1];
         let tiempoMiliseg = Object.values(tiempo)[2];
 
+        if(tiempoMiliseg >0 && tiempoMiliseg <=60){
+            puntos = 10;
+        }
         if (tiempoSeg > 0 && tiempoSeg <= 30) {
-            puntos = 30
+            puntos = 5;
+        }
+        if(tiempoSeg >30 && tiempoSeg <=60){
+            puntos = 3;
+        }
+        if(tiempoMin>=1){
+            puntos= 1;
+        
         }
 
         imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
