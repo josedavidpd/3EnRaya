@@ -19,6 +19,8 @@ var mensajeGanar = pnts => `Enhorabuena, has ganado con ${pnts} puntos`;
 var arrayActivo;
 var ganaJugador = false;
 var empate = false;
+var token = localStorage.getItem("token");
+var username = localStorage.getItem("username");
 
 var JUGADOR = {
     HUMANO: 1,
@@ -230,8 +232,8 @@ $(document).on('click', '.cuad', e => {
             let tiempoMin = Object.values(tiempo)[0];
             let tiempoSeg = Object.values(tiempo)[1];
             let tiempoMiliseg = Object.values(tiempo)[2];
-            puntos = tiempoMin * tiempoSeg + tiempoMiliseg;
-            imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+    
+            
         } else if (juego.tablero.esGanador(2))
             imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
         else
@@ -251,22 +253,34 @@ function juegoGanado(simbolo) {
         let tiempoMin = Object.values(tiempo)[0];
         let tiempoSeg = Object.values(tiempo)[1];
         let tiempoMiliseg = Object.values(tiempo)[2];
-
-        if(tiempoMiliseg >0 && tiempoMiliseg <=60){
-            puntos = 10;
-        }
-        if (tiempoSeg > 0 && tiempoSeg <= 30) {
-            puntos = 5;
-        }
-        if(tiempoSeg >30 && tiempoSeg <=60){
-            puntos = 3;
-        }
-        if(tiempoMin>=1){
-            puntos= 1;
-        
-        }
+        ganaJugador=true;
+        puntos = 3;
 
         imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
+        $.ajax({
+            method: "POST",
+            url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/battle/create",
+            dataType: "json",
+            data: { win: ganaJugador, time: conseguirTiempoEnSegundos() },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+            }
+        })
+            .done(function (resp) {
+                $(".nombreUsuario").html(username);
+            })
+
+            .fail(function (resp) {
+                console.log("ERROR RESPUESTA");
+                console.log(resp);
+            });
+
+        $("#btn-logout").on('click', function () {
+            localStorage.removeItem('token')
+            localStorage.removeItem('username');
+            location.replace('../../html/login.html');
+
+        });
     }
     cronometro.parar();
     cronometroEmpezado = false;
@@ -280,3 +294,11 @@ $(document).on('click', ('.activo'), e => {
         cronometro.iniciar();
     juego.logica(parseInt(e.target.id));
 });
+
+function conseguirTiempoEnSegundos(){
+    let tiempo = Object.values(cronometro)[2];
+    let tiempoMin = parseInt(Object.values(tiempo)[0]);
+    let tiempoSeg = parseInt(Object.values(tiempo)[1]);
+    let tiempoMiliseg = parseInt(Object.values(tiempo)[2]);
+    return parseInt(Math.round((tiempoMin*60)+tiempoSeg+(tiempoMiliseg/60)));
+}
