@@ -206,22 +206,6 @@ class Juego {
     }
 }
 
-// function calcularMaquina() {
-//     arrayActivo = document.getElementsByClassName('activo');
-//     if (arrayActivo.length == 0) {
-//         cronometro.parar();
-//         cronometroEmpezado = false;
-//     } else {
-//         let aleatorio = Math.floor((Math.random() * arrayActivo.length));
-//         ponerEquis(arrayActivo[aleatorio]);
-//         juego.tablero.marcar(JUGADOR.CPU, arrayActivo[aleatorio].id);
-//         arrayActivo[aleatorio].classList.remove('activo');
-//         juego.movimientoAI();
-//     }
-//     if (juego.tablero.esGanador('equis'))
-//         juegoGanado('equis');
-// }
-
 $(document).on('click', '.cuad', e => {
     if (document.getElementsByClassName('activo').length == 0) {
         cronometro.parar();
@@ -261,7 +245,6 @@ function juegoGanado(simbolo) {
     cronometro.parar();
     cronometroEmpezado = false;
     $('.activo').removeClass('activo');
-    alert(`Ganador ${simbolo}`);
 }
 
 var juego = new Juego();
