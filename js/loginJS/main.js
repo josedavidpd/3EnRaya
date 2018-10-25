@@ -1,38 +1,38 @@
-$(document).ready(function() {
-  //Conexion del login con el servidor. Si se hace el login bien, guardaremos una variable en el navegador(token)y nos llevará al juego
-  $("#btn-login").on("click", function(e) {
+$(document).ready(function () {
+  // Conexion del login con el servidor. Si se hace el login bien, guardaremos una variable en el navegador(token)y nos llevará al juego
+  $("#btn-login").on("click", function (e) {
     e.preventDefault();
     var em = $("#email").val();
     var pwd = $("#password").val();
 
     $.ajax({
-      method: "POST",
-      url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
-      dataType: "json",
-      data: {
-        email: em,
-        password: pwd
-      }
-    })
-      .done(function(user) {
+        method: "POST",
+        url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
+        dataType: "json",
+        data: {
+          email: em,
+          password: pwd
+        }
+      })
+      .done(function (user) {
         localStorage.setItem("token", user.token);
         localStorage.setItem("username", user.username);
         localStorage.setItem("email", user.email);
 
-        location.replace("../../html/juego.html");
+        location.replace("../../html/tablero.html");
       })
-      .fail(function(resp) {
+      .fail(function (resp) {
         $("#errorLogin").removeClass("d-none");
         console.log("ERROR RESPUESTA");
         console.log(resp);
       });
   });
 
-  //Comprueba que en el input de email, se meta un email correcto y no cualquier cosa y/o que no esten los campos vacios
-  (function($) {
+  // Comprueba que en el input de email, se meta un email correcto y no cualquier cosa y/o que no esten los campos vacios
+  (function ($) {
     var input = $(".validate-input .input100");
 
-    $(".validate-form").on("submit", function() {
+    $(".validate-form").on("submit", function () {
       var check = true;
 
       for (var i = 0; i < input.length; i++) {
@@ -45,8 +45,8 @@ $(document).ready(function() {
       return check;
     });
 
-    $(".validate-form .input100").each(function() {
-      $(this).focus(function() {
+    $(".validate-form .input100").each(function () {
+      $(this).focus(function () {
         hideValidate(this);
       });
     });
@@ -58,19 +58,19 @@ $(document).ready(function() {
       ) {
         if (
           $(input)
-            .val()
-            .trim()
-            .match(
-              /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
-            ) == null
+          .val()
+          .trim()
+          .match(
+            /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
+          ) == null
         ) {
           return false;
         }
       } else {
         if (
           $(input)
-            .val()
-            .trim() == ""
+          .val()
+          .trim() == ""
         ) {
           return false;
         }

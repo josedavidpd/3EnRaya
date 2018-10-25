@@ -31,7 +31,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border-spacing: 0;
   }
   
-  /*-- start editing from here --*/
   a {
     text-decoration: none;
   }
@@ -40,69 +39,55 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     text-align: right;
   }
   
-  /* text align right */
   .txt-lt {
     text-align: left;
   }
   
-  /* text align left */
   .txt-center {
     text-align: center;
   }
   
-  /* text align center */
   .float-rt {
     float: right;
   }
   
-  /* float right */
   .float-lt {
     float: left;
   }
-  
-  /* float left */
+
   .clear {
     clear: both;
   }
   
-  /* clear float */
   .pos-relative {
     position: relative;
   }
   
-  /* Position Relative */
   .pos-absolute {
     position: absolute;
   }
   
-  /* Position Absolute */
   .vertical-base {
     vertical-align: baseline;
   }
   
-  /* vertical align baseline */
   .vertical-top {
     vertical-align: top;
   }
   
-  /* vertical align top */
   nav.vertical ul li {
     display: block;
   }
   
-  /* vertical menu */
   nav.horizontal ul li {
     display: inline-block;
   }
   
-  /* horizontal menu */
   img {
     max-width: 100%;
   }
   
-  /*-- end reset --*/
   body {
-    /* fallback for old browsers */
     background: #9053c7;
   background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
@@ -123,7 +108,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-family: 'Roboto', sans-serif;
   }
   
-  /*-- main --*/
   .main-w3layouts {
     padding: 3em 0 1em;
   }
@@ -195,7 +179,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   ::-moz-placeholder {
-    /* Firefox 19+ */
     color: #fff;
   }
   
@@ -246,8 +229,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: #76b852;
   }
   
-  /*-- //main --*/
-  /*-- checkbox --*/
   .wthree-text label {
     font-size: 0.9em;
     color: #fff;
@@ -323,8 +304,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     }
   }
   
-  /*-- //checkbox --*/
-  /*-- copyright --*/
   .colorlibcopy-agile {
     margin: 2em 0 1em;
     text-align: center;
@@ -351,7 +330,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: #000;
   }
   
-  /*-- //copyright --*/
   .wrapper {
     position: relative;
     overflow: hidden;
@@ -525,7 +503,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     }
   }
   
-  /*-- responsive-design --*/
   @media(max-width:1440px) {
     input[type="text"], input[type="email"], input[type="password"] {
       width: 94%;
@@ -757,3 +734,4 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     .main-w3layouts {
       padding: 1em 0 0;
     }
+  }

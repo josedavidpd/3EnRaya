@@ -37,49 +37,18 @@ class Tablero {
   // Comprobacion del panel para saber si se ha ganado. Se le pasa el numero del jugador para comprobar tanto equis como circulos.
   esGanador(jugador) {
     //HORIZONTAL
-    let bool =
-      this.panel[0] == jugador &&
-      this.panel[1] == jugador &&
-      this.panel[2] == jugador;
-    bool =
-      bool ||
-      (this.panel[3] == jugador &&
-        this.panel[4] == jugador &&
-        this.panel[5] == jugador);
-    bool =
-      bool ||
-      (this.panel[6] == jugador &&
-        this.panel[7] == jugador &&
-        this.panel[8] == jugador);
+    let bool = this.panel[0] == jugador && this.panel[1] == jugador && this.panel[2] == jugador;
+    bool = bool || (this.panel[3] == jugador && this.panel[4] == jugador && this.panel[5] == jugador);
+    bool = bool || (this.panel[6] == jugador && this.panel[7] == jugador && this.panel[8] == jugador);
 
     //VERTical
-    bool =
-      bool ||
-      (this.panel[0] == jugador &&
-        this.panel[3] == jugador &&
-        this.panel[6] == jugador);
-    bool =
-      bool ||
-      (this.panel[1] == jugador &&
-        this.panel[4] == jugador &&
-        this.panel[7] == jugador);
-    bool =
-      bool ||
-      (this.panel[2] == jugador &&
-        this.panel[5] == jugador &&
-        this.panel[8] == jugador);
+    bool = bool || (this.panel[0] == jugador && this.panel[3] == jugador && this.panel[6] == jugador);
+    bool = bool || (this.panel[1] == jugador && this.panel[4] == jugador && this.panel[7] == jugador);
+    bool = bool || (this.panel[2] == jugador && this.panel[5] == jugador && this.panel[8] == jugador);
 
     //DIAGONAl
-    bool =
-      bool ||
-      (this.panel[0] == jugador &&
-        this.panel[4] == jugador &&
-        this.panel[8] == jugador);
-    bool =
-      bool ||
-      (this.panel[2] == jugador &&
-        this.panel[4] == jugador &&
-        this.panel[6] == jugador);
+    bool = bool || (this.panel[0] == jugador && this.panel[4] == jugador && this.panel[8] == jugador);
+    bool = bool || (this.panel[2] == jugador && this.panel[4] == jugador && this.panel[6] == jugador);
     return bool;
   }
 
@@ -311,7 +280,7 @@ function juegoGanado(simbolo) {
       document.getElementById("titulo"),
       mensajeGanar(puntos)
     );
-    //Conexión del juego al servidor
+    // Conexión del juego al servidor
     $.ajax({
       method: "POST",
       url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/battle/create",
@@ -320,16 +289,16 @@ function juegoGanado(simbolo) {
         win: ganaJugador,
         time: conseguirTiempoEnSegundos()
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization", `Bearer ${token}`);
       }
-    }).fail(function(resp) {
+    }).fail(function (resp) {
       console.log("ERROR RESPUESTA");
       console.log(resp);
     });
 
-    //Evento onclick para el cierre de sesión, se destruye todas las variables del localStorage
-    $("#btn-logout").on("click", function() {
+    // Evento onclick para el cierre de sesión, se destruye todas las variables del localStorage
+    $("#btn-logout").on("click", function () {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       location.replace("../../html/login.html");
@@ -353,7 +322,7 @@ function conseguirTiempoEnSegundos() {
 $(".nombreUsuario").html(username);
 
 // Tratamiendo de cierre de sesión.
-$("#btn-logout").on("click", function() {
+$("#btn-logout").on("click", function () {
   localStorage.clear();
   location.replace("../../3EnRaya/html/login.html");
 });

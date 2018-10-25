@@ -1,86 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8" />
-    <title>Ranking de usuarios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="../img/ranking.ico" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+  <meta charset="utf-8" />
+  <title>Ranking de usuarios</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../img/ranking.ico" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
     crossorigin="anonymous">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="../css/mdb.min.css" rel="stylesheet">
-
-    <link href="../css/style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="ranking.css" />
-    
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/mdb.min.css" rel="stylesheet">
 </head>
+
 <body>
+  <nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color">
+    <a class="navbar-brand" href="#">Tic Tac Toe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3"
+      aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-3">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-effect waves-light unique-color ml-4" href="tablero.html">JUGAR</a>
+        </li>
+        <li class="nav-item ml-4">
+          <a class="nav-link waves-effect waves-light" href="#">Ranking</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item dropdown">
+          <a class="nombreUsuario nav-link dropdown-toggle waves-effect waves-light text-capitalize" id="navbarDropdownMenuLink"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user mr-1"></i>Usuario
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-default animated zoomIn" aria-labelledby="navbarDropdownMenuLink">
 
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color">
-        <a class="navbar-brand" href="#">Tic Tac Toe</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3" aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent-3">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link waves-effect waves-light unique-color ml-4" href="tablero.html">JUGAR
-                
-              </a>
-            </li>
-            <li class="nav-item ml-4">
-              <a class="nav-link waves-effect waves-light" href="#">Ranking</a>
-            </li>
-            
-          </ul>
-          <ul class="navbar-nav ml-auto nav-flex-icons">
-              
-            
-            <li class="nav-item dropdown">
-              <a class="nombreUsuario nav-link dropdown-toggle waves-effect waves-light text-capitalize" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user mr-1"></i>Usuario
-              </a>
-              <div class="dropdown-menu dropdown-menu-right dropdown-default animated zoomIn" aria-labelledby="navbarDropdownMenuLink">
-               
-                <a class="dropdown-item waves-effect waves-light" href="#" id="btn-logout"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <div class="container">
-          <div class="col">
-              <div class="col-md-12 col-lg-12">
-                    <table class="table table-striped mt-4">
-                            <thead>
-                              <tr>
-                                <th scope="col">Posición</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Tiempo</th>
-                                <th scope="col">Puntos</th>
-                              </tr>
-                            </thead>
-                            <tbody id="ranking">
-                             
-                              
-                            </tbody>
-                          </table>
-
-              </div>
-
-
+            <a class="dropdown-item waves-effect waves-light" href="#" id="btn-logout"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar
+              sesión</a>
           </div>
-
-
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="col">
+      <div class="col-md-12 col-lg-12">
+        <table class="table table-striped mt-4">
+          <thead>
+            <tr>
+              <th scope="col">Posición</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Tiempo</th>
+              <th scope="col">Puntos</th>
+            </tr>
+          </thead>
+          <tbody id="ranking"></tbody>
+        </table>
       </div>
-
-
-<script src="../js/jquery-3.2.1.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/mdb.min.js"></script>
-<script src="../js/rankingJS/ranking.js"></script>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/mdb.min.js"></script>
+  <script src="../js/rankingJS/ranking.js"></script>
 </body>
+
 </html>
