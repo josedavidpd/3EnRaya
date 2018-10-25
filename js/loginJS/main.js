@@ -6,22 +6,24 @@ $(document).ready(function () {
         var pwd = $('#password').val();
 
         $.ajax({
-            method: "POST",
-            url:
-                "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
-            dataType: "json",
-            data: { email: em, password: pwd }
-        })
+                method: "POST",
+                url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/auth/login",
+                dataType: "json",
+                data: {
+                    email: em,
+                    password: pwd
+                }
+            })
             .done(function (user) {
                 localStorage.setItem("token", user.token);
                 localStorage.setItem("username", user.username);
                 localStorage.setItem("email", user.email);
 
 
-                location.replace('../../html/ranking.html');
+                location.replace('../../3EnRaya/html/ranking.html');
             })
             .fail(function (resp) {
-               $("#errorLogin").removeClass('d-none');
+                $("#errorLogin").removeClass('d-none');
                 console.log("ERROR RESPUESTA");
                 console.log(resp);
             });
@@ -55,8 +57,7 @@ $(document).ready(function () {
                 if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
                     return false;
                 }
-            }
-            else {
+            } else {
                 if ($(input).val().trim() == '') {
                     return false;
                 }
@@ -75,10 +76,11 @@ $(document).ready(function () {
             $(thisAlert).removeClass('alert-validate');
         }
 
-        
-       
+
+
 
     });
 
-    
-});(jQuery)
+
+});
+(jQuery)

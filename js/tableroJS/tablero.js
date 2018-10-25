@@ -216,8 +216,8 @@ $(document).on('click', '.cuad', e => {
             let tiempoMin = Object.values(tiempo)[0];
             let tiempoSeg = Object.values(tiempo)[1];
             let tiempoMiliseg = Object.values(tiempo)[2];
-    
-            
+
+
         } else if (juego.tablero.esGanador(2))
             imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
         else
@@ -237,21 +237,22 @@ function juegoGanado(simbolo) {
         let tiempoMin = Object.values(tiempo)[0];
         let tiempoSeg = Object.values(tiempo)[1];
         let tiempoMiliseg = Object.values(tiempo)[2];
-        ganaJugador=true;
+        ganaJugador = true;
         puntos = 3;
 
         imprimirMensajeFinal(document.getElementById('titulo'), mensajeGanar(puntos));
         $.ajax({
-            method: "POST",
-            url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/battle/create",
-            dataType: "json",
-            data: { win: ganaJugador, time: conseguirTiempoEnSegundos() },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-            }
-        })
-            .done(function (resp) {
-                $(".nombreUsuario").html(username);
+                method: "POST",
+                url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/battle/create",
+                dataType: "json",
+                data: {
+                    win: ganaJugador,
+                    time: conseguirTiempoEnSegundos()
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+
+                }
             })
 
             .fail(function (resp) {
@@ -278,10 +279,16 @@ $(document).on('click', ('.activo'), e => {
     juego.logica(parseInt(e.target.id));
 });
 
-function conseguirTiempoEnSegundos(){
+function conseguirTiempoEnSegundos() {
     let tiempo = Object.values(cronometro)[2];
     let tiempoMin = parseInt(Object.values(tiempo)[0]);
     let tiempoSeg = parseInt(Object.values(tiempo)[1]);
     let tiempoMiliseg = parseInt(Object.values(tiempo)[2]);
-    return parseInt(Math.round((tiempoMin*60)+tiempoSeg+(tiempoMiliseg/60)));
+    return parseInt(Math.round((tiempoMin * 60) + tiempoSeg + (tiempoMiliseg / 60)));
 }
+$(".nombreUsuario").html(username);
+$("#btn-logout").on('click', function () {
+    localStorage.removeItem('token')
+    localStorage.removeItem('username');
+    location.replace('../../3EnRaya/html/login.html');
+});

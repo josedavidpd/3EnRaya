@@ -1,20 +1,19 @@
-$(document).ready(function (){
+$(document).ready(function () {
 
-        var token = localStorage.getItem('token');
-        var username = localStorage.getItem('username');
+    var token = localStorage.getItem('token');
+    var username = localStorage.getItem('username');
 
 
     $.ajax({
-        method: "GET",
-        url:
-            "http://www.miguelcamposrivera.com:3008/tictactoeapi/user/ranking",
-        dataType: "json",
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-        }
-    })
+            method: "GET",
+            url: "http://www.miguelcamposrivera.com:3008/tictactoeapi/user/ranking",
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            }
+        })
         .done(function (resp) {
-           $('.nombreUsuario').html(username);
+            $('.nombreUsuario').html(username);
             resp.forEach(usuario => {
                 $("#ranking").append(` <tr>
                                 <th scope="row">1</th>
@@ -23,7 +22,7 @@ $(document).ready(function (){
                                 <td><span class="font-weight-bold">${usuario.points}</span></td>
                               </tr>`);
             });
-           
+
         })
         .fail(function (resp) {
             console.log("ERROR RESPUESTA");
@@ -34,8 +33,7 @@ $(document).ready(function (){
     $("#btn-logout").on('click', function () {
         localStorage.removeItem('token')
         localStorage.removeItem('username');
-        location.replace('../../html/login.html');
-
+        location.replace('../../3EnRaya/html/login.html');
     });
 
 });
