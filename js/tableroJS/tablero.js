@@ -32,6 +32,7 @@ var ESTADO = {
     TERMINADO: 2
 };
 
+// Se crea un objeto tablero con atributos cuads: compuesto de todos los elementos que forman el tablero, y atributo panel, que es un array compuesto de los cuadrados ocupados, guardando el valor 1 si lo ocupa el humano y 2 si lo ocupa la cpu.
 class Tablero {
     constructor() {
         this.panel = [];
@@ -41,7 +42,7 @@ class Tablero {
             this.cuads[i] = $(`#${i}`);
         }
     }
-
+    // Comprobacion del panel para saber si se ha ganado. Se le pasa el numero del jugador para comprobar tanto equis como circulos.
     esGanador(jugador) {
         //HORIZONTAL
         var bool = (this.panel[0] == jugador && this.panel[1] == jugador && this.panel[2] == jugador);
@@ -79,6 +80,8 @@ class Tablero {
     };
 }
 
+// Se crea un objeto Juego compuesto de un tablero, un estado, una variable partidas que indica el numero de partidas consecutivas sin refrescar la pagina, 
+// la consola (lugar donde se imprimen los mensajes de estado) y se realiza un reset para comenzar la partida a 1.
 class Juego {
     constructor() {
         this.partidas = 0;
@@ -92,7 +95,7 @@ class Juego {
         this.tablero.reset();
         if (this.partidas % 2 == 1) {
             this.estado = ESTADO.ESPERANDO;
-            imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador 1");
+            imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador");
             this.tablero.marcar(JUGADOR.CPU, Math.floor(Math.random() * 9));
         }
         this.partidas++;
@@ -100,6 +103,8 @@ class Juego {
         imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador");
     };
 
+    // Se comprueba el estado del juego, si es "esperando", es el turno de la CPU, de lo contrario no hace nada. Si el estado es terminado resetea los paneles del Tablero.
+    // Comprueba que la casilla elegida está vacía, si lo está se comprueba si se ha ganado. Si no ha ganado y no quedan casillas vacias, hay empate. Si quedan casillas libres, realiza el movimiento de la IA, que disparará de nuevo las comprobaciones de finalización de la partida.
     logica(posicion) {
         if (this.estado == ESTADO.JUGANDO) {
             if (this.tablero.marcable(posicion)) {
@@ -129,7 +134,7 @@ class Juego {
                         cronometroEmpezado = false;
                         imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
                     } else {
-                        imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador 1");
+                        imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador");
                         this.estado == ESTADO.JUGANDO;
                     }
                 }
@@ -139,20 +144,17 @@ class Juego {
         }
     };
 
+    // Tratamiento del movimiento de la IA, hace uso de la funcion min y max. Por decisión de grupo y para hacerlo competitivo pero no injusto, se crea un numero aleatorio entre 0 y 3.
+    // Si ese numero es 0, la maquina realiza un movimiento aleatorio.
+    // Si es 1, 2 o 3, la máquina simula el movimiento del Jugador para ganar, y escoge esa posición que será la más favorable para evitar que gane el Jugador y a su vez intentar ganar la máquina.
+    // Se recorre todas las celdas del tablero y se marcan si no lo están. 
     movimientoAI() {
         var posicion = 0;
         var aux, mejor = -9999;
         let aleatorioNumero = Math.floor((Math.random() * 4));
-        console.log(`Linea156-${aleatorioNumero}`);
 
         if (aleatorioNumero == 0) {
-            for (let i = 0; i < this.tablero.panel.length; i++) {
-                if (this.tablero.marcable(i)) {
-                    posicion = i;
-                    console.log(i);
-                    i = this.tablero.panel.length - 1;
-                }
-            }
+            posicion = calcularMovimientoAleatorio();
         } else {
             for (let i = 0; i < this.tablero.panel.length; i++) {
                 if (this.tablero.marcable(i)) {
@@ -171,6 +173,7 @@ class Juego {
         document.getElementById(posicion).classList.remove('activo');
     };
 
+    // Simulación del turno del Jugador, que intenta hacer que no gane o que empate.
     min() {
         if (this.tablero.esGanador(JUGADOR.CPU)) return 1;
         if (!this.tablero.celdasVacias()) return 0;
@@ -189,6 +192,7 @@ class Juego {
         return mejor;
     }
 
+    // Simula el turno de la máquina y busca el valor más alto para conseguir la victoria.
     max() {
         if (this.tablero.esGanador(JUGADOR.HUMANO)) return -1;
         if (!this.tablero.celdasVacias()) return 0;
@@ -208,35 +212,29 @@ class Juego {
     }
 }
 
-$(document).on('click', '.cuad', e => {
-    if (document.getElementsByClassName('activo').length == 0) {
-        cronometro.parar();
-        if (juego.tablero.esGanador(1)) {
-            let tiempo = Object.values(cronometro)[2];
-            let tiempoMin = Object.values(tiempo)[0];
-            let tiempoSeg = Object.values(tiempo)[1];
-            let tiempoMiliseg = Object.values(tiempo)[2];
-
-
-        } else if (juego.tablero.esGanador(2))
-            imprimirMensajeFinal(document.getElementById('titulo'), mensajePerder);
-        else
-            imprimirMensajeFinal(document.getElementById('titulo'), mensajeEmpate);
-        console.log('hola2');
-        cronometroEmpezado = false;
+// Se crea un array y se rellena de elementos html con los cuadrados activos (usando la funcion marcable encontrada en Tablero). Para que la eleccion sea aleatoria se baraja el array. Devuelve el id del primer elemento de ese array de activos aleatorio.
+// Como al principio del metodo el arrayActivo se instancia vacio, nunca almacenará los valores previos.
+function calcularMovimientoAleatorio() {
+    let posicionAleatoriaResult;
+    let arrayActivo = [];
+    for (let index = 0; index < juego.tablero.panel.length; index++) {
+        if (juego.tablero.marcable(index)) {
+            arrayActivo.push($(`#${index}`));
+        }
     }
-});
+    arrayActivo.sort(() => Math.random() - 0.5);
+    posicionAleatoriaResult = arrayActivo[0].attr('id');
+    return posicionAleatoriaResult;
+}
 
+// Boton para resetear el cronometro. Utilizarlo para quedar el primero es trampa, sé legal. Existe por el hecho de demostración.
 $(document).on('click', '#resetearCronometro', e => {
     cronometro.resetear();
 });
 
+// Tratamiento de juego ganado. Si gana el jugador (circulo) realiza la peticion AJAX para enviar el dato del tiempo y el booleano ganaJugador en true. Tambien se para el cronometro y elimina la clase activo de todos los cuadros del tablero.
 function juegoGanado(simbolo) {
     if (simbolo == "circulo") {
-        let tiempo = Object.values(cronometro)[2];
-        let tiempoMin = Object.values(tiempo)[0];
-        let tiempoSeg = Object.values(tiempo)[1];
-        let tiempoMiliseg = Object.values(tiempo)[2];
         ganaJugador = true;
         puntos = 3;
 
@@ -272,13 +270,7 @@ function juegoGanado(simbolo) {
     $('.activo').removeClass('activo');
 }
 
-var juego = new Juego();
-$(document).on('click', ('.activo'), e => {
-    if (!cronometroEmpezado)
-        cronometro.iniciar();
-    juego.logica(parseInt(e.target.id));
-});
-
+// Encargado de transformar el tiempo a segundos. Utilizado para el ranking.
 function conseguirTiempoEnSegundos() {
     let tiempo = Object.values(cronometro)[2];
     let tiempoMin = parseInt(Object.values(tiempo)[0]);
@@ -286,9 +278,21 @@ function conseguirTiempoEnSegundos() {
     let tiempoMiliseg = parseInt(Object.values(tiempo)[2]);
     return parseInt(Math.round((tiempoMin * 60) + tiempoSeg + (tiempoMiliseg / 60)));
 }
+
+// Sustitución del nombre en la barra superior cogiendo el valor de la sesión.
 $(".nombreUsuario").html(username);
+
+// Tratamiendo de cierre de sesión.
 $("#btn-logout").on('click', function () {
     localStorage.removeItem('token')
     localStorage.removeItem('username');
     location.replace('../../3EnRaya/html/login.html');
+});
+
+// Inicialización del Juego.
+var juego = new Juego();
+$(document).on('click', ('.activo'), e => {
+    if (!cronometroEmpezado)
+        cronometro.iniciar();
+    juego.logica(parseInt(e.target.id));
 });
