@@ -84,6 +84,10 @@ body {
     background-image: url('../../img/equis.svg');
 }
 
+.ganador {
+    background-color: silver;
+}
+
 @media (max-width:991px) {
     #titulo {
         font-size: 20px;

@@ -1,12 +1,3 @@
-const cuad1 = $('#0');
-const cuad2 = $('#1');
-const cuad3 = $('#2');
-const cuad4 = $('#3');
-const cuad5 = $('#4');
-const cuad6 = $('#5');
-const cuad7 = $('#6');
-const cuad8 = $('#7');
-const cuad9 = $('#8');
 const cronometro = new Cronometro(document.getElementById('cronometro'));
 const mensajePerder = "Lo sentimos, has perdido";
 const mensajeEmpate = "Nadie ha ganado";
@@ -16,7 +7,6 @@ const ponerEquis = a => a.insertAdjacentHTML('afterbegin', '<i class="equis"></i
 var cronometroEmpezado = false;
 var puntos = 0;
 var mensajeGanar = pnts => `Enhorabuena, has ganado con ${pnts} puntos`;
-var arrayActivo;
 var ganaJugador = false;
 var empate = false;
 var token = localStorage.getItem("token");
@@ -45,13 +35,15 @@ class Tablero {
     // Comprobacion del panel para saber si se ha ganado. Se le pasa el numero del jugador para comprobar tanto equis como circulos.
     esGanador(jugador) {
         //HORIZONTAL
-        var bool = (this.panel[0] == jugador && this.panel[1] == jugador && this.panel[2] == jugador);
+        let bool = (this.panel[0] == jugador && this.panel[1] == jugador && this.panel[2] == jugador);
         bool = bool || (this.panel[3] == jugador && this.panel[4] == jugador && this.panel[5] == jugador);
         bool = bool || (this.panel[6] == jugador && this.panel[7] == jugador && this.panel[8] == jugador);
+
         //VERTical
         bool = bool || (this.panel[0] == jugador && this.panel[3] == jugador && this.panel[6] == jugador);
         bool = bool || (this.panel[1] == jugador && this.panel[4] == jugador && this.panel[7] == jugador);
         bool = bool || (this.panel[2] == jugador && this.panel[5] == jugador && this.panel[8] == jugador);
+
         //DIAGONAl
         bool = bool || (this.panel[0] == jugador && this.panel[4] == jugador && this.panel[8] == jugador);
         bool = bool || (this.panel[2] == jugador && this.panel[4] == jugador && this.panel[6] == jugador);
@@ -91,12 +83,17 @@ class Juego {
         this.reset();
     }
 
+    // Reinicia el juego y crea un primer movimiento de la máquina para que el primer turno no sea siempre para el jugador.
     reset() {
         this.tablero.reset();
         if (this.partidas % 2 == 1) {
             this.estado = ESTADO.ESPERANDO;
-            imprimirMensajeFinal(document.getElementById('titulo'), "Turno del jugador");
-            this.tablero.marcar(JUGADOR.CPU, Math.floor(Math.random() * 9));
+            imprimirMensajeFinal(document.getElementById('titulo'), "Turno de la máquina...");
+            let posicionAleatoriaInicial = calcularMovimientoAleatorio();
+            this.tablero.marcar(JUGADOR.CPU, posicionAleatoriaInicial);
+            ponerEquis(document.getElementById(posicionAleatoriaInicial));
+            document.getElementById(posicionAleatoriaInicial).classList.remove('activo');
+            cronometro.iniciar();
         }
         this.partidas++;
         this.estado = ESTADO.JUGANDO;
@@ -227,6 +224,20 @@ function calcularMovimientoAleatorio() {
     return posicionAleatoriaResult;
 }
 
+// Reinicia el juego sin necesidad de refrescar la página.
+$(document).on('click', '#botonReiniciar', e => {
+    for (let index = 0; index < juego.tablero.cuads.length; index++) {
+        if ($(`#${index}`).has('i').length != 0) {
+            $(`#${index}`).empty();
+        }
+        $(`#${index}`).addClass('activo');
+    }
+    juego.reset();
+    cronometro.parar();
+    cronometroEmpezado = false;
+    cronometro.resetear();
+});
+
 // Boton para resetear el cronometro. Utilizarlo para quedar el primero es trampa, sé legal. Existe por el hecho de demostración.
 $(document).on('click', '#resetearCronometro', e => {
     cronometro.resetear();
@@ -292,7 +303,9 @@ $("#btn-logout").on('click', function () {
 // Inicialización del Juego.
 var juego = new Juego();
 $(document).on('click', ('.activo'), e => {
-    if (!cronometroEmpezado)
+    if (!cronometroEmpezado) {
         cronometro.iniciar();
+        cronometroEmpezado = true;
+    }
     juego.logica(parseInt(e.target.id));
 });
